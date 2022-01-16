@@ -1,0 +1,12 @@
+{
+  "attributes": [
+    {
+      "trait_type": "Type",
+      "value": "Stock Certificate"
+    }
+  ],
+  "description": "A tokenized representation of the historic Rise and Fall of Theranos (RFT). The RFT NFT features an actual Series A stock certificate issued to an early investor in Theranos. The winning bidder also receives a token that can be redeemed for the physical stock certificate artifact.",
+  "image": "https://ipfs.io/ipfs/QmeyKNQAc5PHwTbE2kbZo3RRvXDsiN4DpKr5Qi4bQURLbX",
+  "name": "Rise and Fall of Theranos"
+}
+
