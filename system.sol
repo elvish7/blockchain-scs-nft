@@ -17,10 +17,10 @@ contract SCS is ERC1155 {
         uint256 originShares;
         address addr;
         uint keysLen;
-        mapping(string => bool) founderKeys;
+        string[] founderKeys;
         uint256[] certificates;
     }
-
+ 
     mapping(uint256 => Certificate) public nftOwner;
     mapping(address => Company) public hub;
     uint256 nftNum;
@@ -39,9 +39,7 @@ contract SCS is ERC1155 {
         c.originShares = amount;
         c.addr = add;
         c.keysLen = keys.length;
-        for (uint i=0; i<keys.length; i++) {
-            c.founderKeys[keys[i]] = true;
-        }
+        c.founderKeys = keys;
 
         hub[add] = c;
     }
@@ -52,7 +50,8 @@ contract SCS is ERC1155 {
         require(keys.length == hub[add].keysLen, "key is wrong");
 
         for (uint j=0; j<keys.length; j++) {
-            require(hub[add].founderKeys[keys[j]] != false, "key is wrong");
+            require(keccak256(bytes(hub[add].founderKeys[j])) == keccak256(bytes(keys[j])), 
+                "key is wrong");
         }
 
         Certificate memory cert;
@@ -60,7 +59,7 @@ contract SCS is ERC1155 {
         cert.amount = amount;
         cert.owner = receiver;
         cert.companyAdd = add;
-        nftOwner[receiver] = cert;
+        nftOwner[nftNum] = cert;
 
         hub[add].certificates.push(nftNum);
 
@@ -98,7 +97,7 @@ contract SCS is ERC1155 {
     }
 
 
-    function removeCert(uint256 id, Company memory c) private {
+    function removeCert(uint256 id, Company memory c) private pure {
         uint index = 0;
         uint len = c.certificates.length;
         for (uint i=0; i<len; i++) {
