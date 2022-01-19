@@ -14,6 +14,9 @@
     <style>
         .material-icons.md-64 { font-size: 64px; }
         .container {margin-top: 50px;}
+        .h2{text-align: center;}
+        .lookup-table {padding: 20px; margin-bottom: 50px;}
+        .cInfo{text-align: center;}
     </style>
 </head>
 <body>
@@ -45,7 +48,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Founder keys</span>
-                        <textarea class="form-control" name="keys" placeholder="All the keys of the board of directors. ex.['', '', ...]" aria-label="fundkeys"></textarea>
+                        <textarea class="form-control" name="keys" placeholder="All the keys of the board of directors." aria-label="fundkeys"></textarea>
                     </div>
 
                     <button type="button" class="btn btn-dark" id="register">Register</button>
@@ -67,7 +70,36 @@
             </div>
         </div>
     </div>
-    
+    <h2 class="h2">Lookup Table</h2>
+    <div class="container bg-light lookup-table">
+        <div class="input-group mb-4">
+            <input type="search" name="search" class="form-control" placeholder="search" id="datatable-search-input">
+            <button id="search-button" type="button" class="btn btn-dark">
+                <span class="material-icons">search</span>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col cInfo">
+              <p>Company Name</p>
+              <p id="getcName"></p>
+            </div>
+            <div class="col cInfo">
+              <p>Founding Date</p>
+              <p id="getfDate"></p>
+            </div>
+            <div class="col cInfo">
+                <p>Origin Shares</p> 
+                <p id="getoshare"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col cInfo">
+                <p>Current Certificates</p> 
+                <p id=getcertificates></p>
+            </div>
+        </div>
+    </div>
+
     <script src="./work.js"></script>
 </body>
 </html>
