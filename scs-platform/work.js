@@ -24,7 +24,7 @@ document.getElementById('register').onclick = () => {
     contract.methods.register(cName, date, amount, keys).send({ from: account, gas: 4700000}); //value: 50000000000000000
 }
 
-//search company's info
+// Search company's info
 document.getElementById('search-button').onclick = () => {
     var search_cName = String(document.querySelector("[name=search]").value);
     contract.methods.lookup(search_cName).call().then(function( info ) { 

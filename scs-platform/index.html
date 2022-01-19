@@ -12,11 +12,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Kalam:wght@300&family=Reggae+One&display=swap');
+        .scs-title{font-family: 'Reggae One', cursive;}
         .material-icons.md-64 { font-size: 64px; }
         .container {margin-top: 50px;}
         .h2{text-align: center;}
+        .content-text{font-family: 'Josefin Sans', sans-serif;}
         .lookup-table {padding: 20px; margin-bottom: 50px;}
         .cInfo{text-align: center;}
+        .info-text{font-size: 24px; font-family: 'Josefin Sans', sans-serif;}
+        .getcInfo{font-size: 24px; font-family: 'Kalam', cursive; text-transform: uppercase;}
     </style>
 </head>
 <body>
@@ -24,8 +29,8 @@
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Stock Certificate NFT System</h1>
-                <p class="lead fw-normal text-white-50 mb-0">Issue your stock certificate NFT!</p>
+                <h1 class="display-4 fw-bolder scs-title">Stock Certificate NFT System</h1>
+                <p class="lead fw-normal text-white-50 mb-0 content-text">Issue your stock certificate NFT!</p>
             </div>
         </div>
     </header>
@@ -35,23 +40,23 @@
                 <div class="col">
                     <span class="material-icons md-64">account_circle</span>
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Company name @</span>
+                        <span class="input-group-text content-text" id="basic-addon1">Company name @</span>
                         <input type="text" name="cName" class="form-control" aria-label="Companyname" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Founding Date</span>
+                        <span class="input-group-text content-text" id="basic-addon1">Founding Date</span>
                         <input type="date" name="date" class="form-control" placeholder="Founding Date" aria-label="foundingDate" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Amount</span>
+                        <span class="input-group-text content-text">Amount</span>
                         <input type="number" name="amount" class="form-control" aria-label="amount">
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Founder keys</span>
-                        <textarea class="form-control" name="keys" placeholder="All the keys of the board of directors." aria-label="fundkeys"></textarea>
+                        <span class="input-group-text content-text">Founder keys</span>
+                        <textarea class="form-control content-text" name="keys" placeholder="All the keys of the board of directors." aria-label="fundkeys"></textarea>
                     </div>
 
-                    <button type="button" class="btn btn-dark" id="register">Register</button>
+                    <button type="button" class="btn btn-dark content-text" id="register">Register</button>
                 </div>
 
                 <div class="col">
@@ -61,16 +66,20 @@
                         <input type="number" name="amount" class="form-control" aria-label="Amount (to the nearest dollar)">
                         <span class="input-group-text">.00</span>
                     </div>
-                    <button type="button" class="btn btn-dark" id="mint">Mint an NFT</button>
+                    <button type="button" class="btn btn-dark content-text" id="mint">Mint an NFT</button>
                 </div>
                 <div class="col">
                     <span class="material-icons md-64">sync_alt</span>
-                    3 of 3
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">$</span>
+                        <input type="number" name="amount" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <span class="input-group-text">.00</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <h2 class="h2">Lookup Table</h2>
+    <h2 class="h2 content-text">Lookup Table</h2>
     <div class="container bg-light lookup-table">
         <div class="input-group mb-4">
             <input type="search" name="search" class="form-control" placeholder="search" id="datatable-search-input">
@@ -80,20 +89,20 @@
         </div>
         <div class="row">
             <div class="col cInfo">
-              <p>Company Name</p>
-              <p id="getcName"></p>
+              <p class="info-text">Company Name</p>
+              <p class="getcInfo" id="getcName"></p>
             </div>
             <div class="col cInfo">
-              <p>Founding Date</p>
-              <p id="getfDate"></p>
+              <p class="info-text">Founding Date</p>
+              <p class="getcInfo" id="getfDate"></p>
             </div>
             <div class="col cInfo">
-                <p>Origin Shares</p> 
-                <p id="getoshare"></p>
+                <p class="info-text">Origin Shares</p> 
+                <p class="getcInfo" id="getoshare"></p>
             </div>
         </div>
         <div class="row">
-            <div class="col cInfo">
+            <div class="col cInfo info-text">
                 <p>Current Certificates</p> 
                 <p id=getcertificates></p>
             </div>
