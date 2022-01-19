@@ -15,8 +15,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Kalam:wght@300&family=Reggae+One&display=swap');
         .scs-title{font-family: 'Reggae One', cursive;}
         .material-icons.md-64 { font-size: 64px; }
-        .container {margin-top: 50px;}
-        .h2{text-align: center;}
+        .container {margin-top: 30px;}
+        .h2{text-align: center; margin-top:50px;}
         .content-text{font-family: 'Josefin Sans', sans-serif;}
         .lookup-table {padding: 20px; margin-bottom: 50px;}
         .cInfo{text-align: center;}
@@ -62,23 +62,43 @@
                 <div class="col">
                     <span class="material-icons md-64">rocket_launch</span>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">$</span>
-                        <input type="number" name="amount" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        <span class="input-group-text">.00</span>
+                        <span class="input-group-text content-text" id="basic-addon1">Company name @</span>
+                        <input type="text" name="cName" class="form-control" aria-label="Companyname" aria-describedby="basic-addon1">
                     </div>
-                    <button type="button" class="btn btn-dark content-text" id="mint">Mint an NFT</button>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
+                        <input type="number" name="tokenID" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text">Amount</span>
+                        <input type="number" name="amount" class="form-control" aria-label="amount">
+                    </div>
+                    <button type="button" class="btn btn-dark content-text" id="mint">Mint NFT</button>
                 </div>
                 <div class="col">
                     <span class="material-icons md-64">sync_alt</span>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">$</span>
-                        <input type="number" name="amount" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        <span class="input-group-text">.00</span>
+                        <span class="input-group-text content-text">From</span>
+                        <input type="text" name="from-address" class="form-control" placeholder="address" aria-label="address">
                     </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text">To</span>
+                        <input type="text" name="to-address" class="form-control" placeholder="address"aria-label="address">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
+                        <input type="number" name="tokenID" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text">Amount</span>
+                        <input type="number" name="amount" class="form-control" aria-label="amount">
+                    </div>
+                    <button type="button" class="btn btn-dark content-text" id="transfer">Transfer</button>
                 </div>
             </div>
         </div>
     </div>
+
     <h2 class="h2 content-text">Lookup Table</h2>
     <div class="container bg-light lookup-table">
         <div class="input-group mb-4">
