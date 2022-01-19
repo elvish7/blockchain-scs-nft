@@ -22,6 +22,7 @@
         .cInfo{text-align: center;}
         .info-text{font-size: 24px; font-family: 'Josefin Sans', sans-serif;}
         .getcInfo{font-size: 24px; font-family: 'Kalam', cursive; text-transform: uppercase;}
+        .noC{display:none; text-align: center;}
     </style>
 </head>
 <body>
@@ -99,7 +100,7 @@
         </div>
     </div>
 
-    <h2 class="h2 content-text">Lookup Table</h2>
+    <h2 class="h2 content-text">SCN Lookup</h2>
     <div class="container bg-light lookup-table">
         <div class="input-group mb-4">
             <input type="search" name="search" class="form-control" placeholder="search" id="datatable-search-input">
@@ -107,26 +108,29 @@
                 <span class="material-icons">search</span>
             </button>
         </div>
-        <div class="row">
-            <div class="col cInfo">
-              <p class="info-text">Company Name</p>
-              <p class="getcInfo" id="getcName"></p>
+        <div id="results">
+            <div class="row">
+                <div class="col cInfo">
+                    <p class="info-text">Company Name</p>
+                    <p class="getcInfo" id="getcName"></p>
+                </div>
+                <div class="col cInfo">
+                    <p class="info-text">Founding Date</p>
+                    <p class="getcInfo" id="getfDate"></p>
+                </div>
+                <div class="col cInfo">
+                    <p class="info-text">Origin Shares</p> 
+                    <p class="getcInfo" id="getoshare"></p>
+                </div>
             </div>
-            <div class="col cInfo">
-              <p class="info-text">Founding Date</p>
-              <p class="getcInfo" id="getfDate"></p>
-            </div>
-            <div class="col cInfo">
-                <p class="info-text">Origin Shares</p> 
-                <p class="getcInfo" id="getoshare"></p>
+            <div class="row">
+                <div class="col cInfo info-text">
+                    <p>Current Certificates</p> 
+                    <p id=getcertificates></p>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col cInfo info-text">
-                <p>Current Certificates</p> 
-                <p id=getcertificates></p>
-            </div>
-        </div>
+        <h3 class="noC content-text" id="noC">The company doesn't exist!</h3>
     </div>
 
     <script src="./work.js"></script>
