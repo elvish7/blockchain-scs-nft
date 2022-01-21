@@ -12,22 +12,45 @@ contract SCS is ERC1155 {
         address owner;
         string companyName;
     }
+    
     struct Company {
         string name;
         uint256 foundingDate;
         uint256 originShares;
         uint keysLen;
-        string[] founderKeys;
+        address[] founderKeys;
         uint256[] certificates;
     }
- 
+    
+    struct SplitVote {
+        uint256 id;
+        uint256 burnID;
+        address r1;
+        address r2;
+        uint256 amount;
+        address[] founders;
+    }
+    
+    struct Vote {
+        uint256 id;
+        string name;
+        address receiver;
+        uint256 amount;
+        address[] founders;
+    }
+
+    mapping(uint256 => SplitVote) private splitList;
+    mapping(uint256 => Vote) private waitingList; 
     mapping(uint256 => Certificate) private nftOwner;
     mapping(string => Company) private hub;
-    uint256 nftNum;
-
+    uint256 nftID;
+    uint256 voteID;
+    uint256 splitID;
 
     constructor() public ERC1155("https://abcoathup.github.io/SampleERC1155/api/token/{id}.json") {
-        nftNum = 0;
+        nftID = 0;
+        voteID = 0;
+        splitID = 0;
     }
 
     modifier exist(string memory cName) {
@@ -35,39 +58,120 @@ contract SCS is ERC1155 {
         _;
     }
 
+    function lookList(uint256 id) public view returns (Vote memory) {
+        return waitingList[id];
+    }
+
+    function lookSplitList(uint256 id) public view returns (SplitVote memory) {
+        return splitList[id];
+    }
+
     // for those companies using this system for the first time
-    function register(string memory cName, uint256 date, uint256 amount, string[] memory keys) public {
+    function register(string memory cName, uint256 date, uint256 amount, address[] memory founders) public {
+        require(founders.length != 0, "no founder");
+        require(hub[cName].founderKeys.length == 0, "this name has been used");
+
         Company memory c;
         c.name = cName;
         c.foundingDate = date;
         c.originShares = amount;
-        c.keysLen = keys.length;
-        c.founderKeys = keys;
+        c.keysLen = founders.length;
+        c.founderKeys = founders;
 
         hub[cName] = c;
     }
 
-    // issue new certificate NFT
-    function issuing(string memory cName, uint256 amount, string[] memory keys, address receiver) public exist(cName) {
-        require(keys.length == hub[cName].keysLen, "key is wrong");
+    function launchVote(string memory cName, address receiver, uint256 amount) 
+      public exist(cName) returns (uint256 id) {
+        require(receiver != address(0), "launch to zero address");
 
-        for (uint j=0; j<keys.length; j++) {
-            require(keccak256(bytes(hub[cName].founderKeys[j])) == keccak256(bytes(keys[j])), 
-                "key is wrong");
+        Vote memory v;
+        v.id = voteID;
+        v.name = cName;
+        v.receiver = receiver;
+        v.amount = amount;
+        v.founders = hub[cName].founderKeys;
+        
+        waitingList[voteID] = v;
+        voteID++;
+
+        return voteID-1;
+    }
+
+    function launchSplitVote(uint256 id, address r1, address r2, uint256 amount) public returns (uint256) {
+        require(nftOwner[id].owner != address(0), "NFT doesn't exist");
+        require(nftOwner[id].owner == msg.sender, "not owner of this token");
+        require(r1 != address(0) && r2 != address(0), "split to zero address");
+        require(nftOwner[id].amount >= amount, "origin share is smaller than desired share");
+
+        SplitVote memory v;
+        Company memory c = hub[nftOwner[id].companyName];
+        v.id = splitID;
+        v.burnID = id;
+        v.r1 = r1;
+        v.r2 = r2;
+        v.amount = amount;
+        v.founders = c.founderKeys;
+
+        splitList[splitID] = v;
+        splitID++;
+
+        return splitID-1;
+      }
+
+    function sign(uint256 id) public {
+        Vote memory v = waitingList[id];
+        require(v.founders.length != 0, "vote doesn't exist");
+
+        address signer = msg.sender;
+        for (uint i=0; i<v.founders.length; i++) {
+            if (v.founders[i] == signer) {
+                waitingList[id].founders[i] = waitingList[id].founders[v.founders.length-1];
+                waitingList[id].founders.pop();
+                if (waitingList[id].founders.length == 0) {
+                    issuing(v.name, v.amount, v.receiver);
+                }
+                return;
+            }
         }
+        require(1 == 0, "you're not founder or you've signed");
+    }
+
+    function signSplit(uint256 id) public {
+        SplitVote memory v = splitList[id];
+        require(v.founders.length != 0, "vote doesn't exist");
+
+        address signer = msg.sender;
+        for (uint i=0; i<v.founders.length; i++) {
+            if (v.founders[i] == signer) {
+                splitList[id].founders[i] = splitList[id].founders[v.founders.length-1];
+                splitList[id].founders.pop();
+                if (splitList[id].founders.length == 0) {
+                    splitCertificate(v);
+                }
+                return;
+            }
+        }
+        require(1 == 0, "you're not founder or you've signed");    
+    }
+
+    // issue new certificate NFT
+    function issuing(string memory cName, uint256 amount, address receiver) private {
+        //require(hub[cName].founderKeys.length != 0, "this company doesn't exist");
+        //require(receiver != address(0), "receiver is zero address");
 
         Certificate memory cert;
-        cert.id = nftNum;
+        cert.id = nftID;
         cert.amount = amount;
         cert.owner = receiver;
         cert.companyName = cName;
-        nftOwner[nftNum] = cert;
+        nftOwner[nftID] = cert;
 
-        hub[cName].certificates.push(nftNum);
+        hub[cName].certificates.push(nftID);
 
-        _mint(receiver, nftNum, 1, "");
-        nftNum += 1;
-    }  
+        _mint(receiver, nftID, 1, "");
+        nftID += 1;
+    }
 
     // burn the certificate 
     function redemption(address owner, uint256 id) public {
@@ -75,6 +179,7 @@ contract SCS is ERC1155 {
     }
 
     function burn(address owner, uint256 id) private {
+        require(nftOwner[id].owner != address(0), "NFT doesn't exist");
         require(owner != address(0), "burn from zero address");
 
         Certificate memory cert = nftOwner[id];
@@ -90,31 +195,31 @@ contract SCS is ERC1155 {
         hub[cert.companyName].certificates[index] = hub[cert.companyName].certificates[len-1];
         hub[cert.companyName].certificates.pop();
 
-        transacting(owner, address(0), id, 1);
+        transacting(owner, address(0), id);
     }
 
     // burn NFT and split it into 2 NFTs 
-    function splitCertificate(address burner, uint256 id, address r1, address r2, uint256 amount, string[] memory keys) public {
-        require(r1 != address(0) && r2 != address(0), "transfor to zero address");
-
-        Certificate memory cert = nftOwner[id];
-        burn(burner, id);
-        issuing(cert.companyName, amount, keys, r1);
-        issuing(cert.companyName, cert.amount - amount, keys, r2);
+    function splitCertificate(SplitVote memory v) private {
+        Certificate memory cert = nftOwner[v.burnID];
+        burn(cert.owner, cert.id);
+        issuing(cert.companyName, v.amount, v.r1);
+        issuing(cert.companyName, cert.amount - v.amount, v.r2);
     }
 
 
     // transfer certificate to other people
-    function transacting(address from, address to, uint256 id, uint256 amount) public {
+    function transacting(address from, address to, uint256 id) public {
         require(nftOwner[id].owner == from, "not owner of this token");
         
         nftOwner[id].owner = to;
-        TransferSingle(_msgSender(), from, to, id, amount);
+        TransferSingle(_msgSender(), from, to, id, 1);
     }
 
     // lookup company's information, including name, foundingDate, originShares, certificates
     function lookup(string memory cName) 
-      public view exist(cName) returns (string memory, uint256, uint256, Certificate[] memory) {
+      public view exist(cName)
+      returns (string memory, uint256, uint256, Certificate[] memory) {
+
         Company memory comp = hub[cName];
         uint256[] memory cert = hub[cName].certificates;
         Certificate[] memory c = new Certificate[](cert.length);
