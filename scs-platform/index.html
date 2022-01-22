@@ -15,8 +15,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Kalam:wght@300&family=Reggae+One&display=swap');
         .scs-title{font-family: 'Reggae One', cursive;}
         .material-icons.md-64 { font-size: 64px; }
-        .container {margin-top: 30px;}
-        .h2{text-align: center; margin-top:50px;}
+        .container {margin-top: 30px; margin-bottom: 50px;}
+        .h2{text-align: center; margin-top:30px;}
         .content-text{font-family: 'Josefin Sans', sans-serif;}
         .lookup-table {padding: 20px; margin-bottom: 50px;}
         .cInfo{text-align: center;}
@@ -57,7 +57,7 @@
                         <span class="input-group-text content-text">Founder keys</span>
                         <textarea class="form-control content-text" name="keys" placeholder="All the keys of the board of directors. (Seperated with '/', ex. address1/address2)" aria-label="fundkeys"></textarea>
                     </div>
-
+                    <p id='register-err' class="content-text err-hint">Invalid input!</p>
                     <button type="button" class="btn btn-dark content-text" id="register">Register</button>
                 </div>
 
@@ -75,18 +75,27 @@
                         <span class="input-group-text content-text">Amount</span>
                         <input type="number" name="amount_vote" class="form-control" aria-label="amount">
                     </div>
+                    <p class="content-text" style="display:none;" id="result-hint">The token ID is: <span id="vote-id"></span></p>
+                    <p id='vote-err' class="content-text err-hint">Invalid input!</p>
                     <button type="button" class="btn btn-dark content-text" id="vote">Launch vote/Mint NFT</button>
                 </div>
                 <div class="col">   
                     <span class="material-icons md-64">note_alt</span>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text" id="basic-addon1">Company name @</span>
-                        <input type="text" name="cName_sign" class="form-control" aria-label="Companyname" aria-describedby="basic-addon1">
+                        <input type="text" name="cName_check" class="form-control" aria-label="Companyname" aria-describedby="basic-addon1">
                     </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-light mb-3 content-text" type="button" id="check">Get vote details</button>
+                    </div>
+                    <p class="content-text" style="display:none;" id="check-hint-id">Token ID: <span id="check-id"></span></p>
+                    <p class="content-text" style="display:none;" id="check-hint-founders">Founders: <span id="check-founders"></span></p>
+                    
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
                         <input type="number" name="token_sign" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
                     </div>
+                    <p id='sign-err' class="content-text err-hint">Invalid input!</p>
                     <button type="button" class="btn btn-dark content-text" id="sign_mint">Sign mint</button>
                     <button type="button" class="btn btn-dark content-text" id="sign_split">Sign split</button>
 
@@ -121,7 +130,7 @@
             <div class="row">
                 <div class="col cInfo info-text">
                     <p>Current Certificates</p> 
-                    <p id=getcertificates></p>
+                    <p class="getcInfo" id=getcertificates></p>
                 </div>
             </div>
         </div>
@@ -135,16 +144,17 @@
                     <span class="material-icons md-64">sync_alt</span>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text">From</span>
-                        <input type="text" name="from-address" class="form-control" placeholder="address" aria-label="address">
+                        <input type="text" name="from_address" class="form-control" placeholder="address" aria-label="address">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text">To</span>
-                        <input type="text" name="to-address" class="form-control" placeholder="address"aria-label="address">
+                        <input type="text" name="to_address" class="form-control" placeholder="address"aria-label="address">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
-                        <input type="number" name="tokenID" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
+                        <input type="number" name="token_trans" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
                     </div>
+                    <p id='transf-err' class="content-text err-hint">Invalid input!</p>
                     <button type="button" class="btn btn-dark content-text" id="transfer">Transfer</button>
                 </div>
                 <div class="col">
@@ -164,21 +174,22 @@
                     <span class="material-icons md-64">call_split</span>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
-                        <input type="number" name="tokenID" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
+                        <input type="number" name="token_split" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text">Address 1</span>
-                        <input type="text" name="from-address" class="form-control" aria-label="address">
+                        <input type="text" name="split_address1" class="form-control" aria-label="address">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text">Address 2</span>
-                        <input type="text" name="to-address" class="form-control" aria-label="address">
+                        <input type="text" name="split_address2" class="form-control" aria-label="address">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text">Amount</span>
-                        <input type="number" name="amount" class="form-control" aria-label="amount">
+                        <input type="number" name="amount_split" class="form-control" aria-label="amount">
                     </div>
-                    <button type="button" class="btn btn-dark content-text" id="transfer">Transfer</button>
+                    <p id='split-err' class="content-text err-hint">Invalid input!</p>
+                    <button type="button" class="btn btn-dark content-text" id="split-vote">Launch vote/Split NFT</button>
                 </div>
             </div>
         </div>
