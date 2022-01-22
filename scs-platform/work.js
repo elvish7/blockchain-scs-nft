@@ -1,5 +1,5 @@
 const ABI = "./abi.json";
-const ADDRESS = "0x77983aAce2C5F5ab9e251D83BEc16923669aEE08";
+const ADDRESS = "0xd7C0ed665A348180BdBE1f34FA964E247B113067";
 var account = null;
 var contract = null;
 
