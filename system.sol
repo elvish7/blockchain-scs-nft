@@ -39,6 +39,8 @@ contract SCS is ERC1155 {
         address[] founders;
     }
 
+    event getVoteDetail(uint id, address[] founders);
+
     mapping(uint256 => SplitVote) private splitList;
     mapping(uint256 => Vote) private waitingList; 
     mapping(uint256 => Certificate) private nftOwner;
@@ -82,7 +84,7 @@ contract SCS is ERC1155 {
     }
 
     function launchVote(string memory cName, address receiver, uint256 amount) 
-      public exist(cName) returns (uint256 id) {
+      public exist(cName) {
         require(receiver != address(0), "launch to zero address");
 
         Vote memory v;
@@ -95,10 +97,11 @@ contract SCS is ERC1155 {
         waitingList[voteID] = v;
         voteID++;
 
-        return voteID-1;
+        emit getVoteDetail(voteID-1, v.founders);
+        // return voteID-1;
     }
 
-    function launchSplitVote(uint256 id, address r1, address r2, uint256 amount) public returns (uint256) {
+    function launchSplitVote(uint256 id, address r1, address r2, uint256 amount) public {
         require(nftOwner[id].owner != address(0), "NFT doesn't exist");
         require(nftOwner[id].owner == msg.sender, "not owner of this token");
         require(r1 != address(0) && r2 != address(0), "split to zero address");
@@ -116,7 +119,8 @@ contract SCS is ERC1155 {
         splitList[splitID] = v;
         splitID++;
 
-        return splitID-1;
+        emit getVoteDetail(splitID-1, v.founders);
+        // return splitID-1;
       }
 
     function sign(uint256 id) public {
@@ -131,6 +135,7 @@ contract SCS is ERC1155 {
                 if (waitingList[id].founders.length == 0) {
                     issuing(v.name, v.amount, v.receiver);
                 }
+                emit getVoteDetail(id, waitingList[id].founders);
                 return;
             }
         }
@@ -149,6 +154,7 @@ contract SCS is ERC1155 {
                 if (splitList[id].founders.length == 0) {
                     splitCertificate(v);
                 }
+                emit getVoteDetail(id, splitList[id].founders);
                 return;
             }
         }
