@@ -49,7 +49,7 @@ contract SCS is ERC1155 {
     uint256 voteID;
     uint256 splitID;
 
-    constructor() public ERC1155("https://abcoathup.github.io/SampleERC1155/api/token/{id}.json") {
+    constructor() public ERC1155("https://elvish7.github.io/blockchain-scs-nft/token/0.json") {
         nftID = 0;
         voteID = 0;
         splitID = 0;
