@@ -23,6 +23,7 @@
         .info-text{font-size: 24px; font-family: 'Josefin Sans', sans-serif;}
         .getcInfo{font-size: 24px; font-family: 'Kalam', cursive; text-transform: uppercase;}
         .noC{display:none; text-align: center;}
+        .err-hint{display:none; color: red;}
     </style>
 </head>
 <body>
@@ -54,7 +55,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text">Founder keys</span>
-                        <textarea class="form-control content-text" name="keys" placeholder="All the keys of the board of directors." aria-label="fundkeys"></textarea>
+                        <textarea class="form-control content-text" name="keys" placeholder="All the keys of the board of directors. (Seperated with '/', ex. address1/address2)" aria-label="fundkeys"></textarea>
                     </div>
 
                     <button type="button" class="btn btn-dark content-text" id="register">Register</button>
@@ -64,37 +65,31 @@
                     <span class="material-icons md-64">rocket_launch</span>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text" id="basic-addon1">Company name @</span>
-                        <input type="text" name="cName" class="form-control" aria-label="Companyname" aria-describedby="basic-addon1">
+                        <input type="text" name="cName_vote" class="form-control" aria-label="Companyname" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
-                        <input type="number" name="tokenID" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
+                        <span class="input-group-text content-text" id="basic-addon1">Receiver</span>
+                        <input type="text" name="receiver" class="form-control" aria-label="receiver" placeholder="address" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text">Amount</span>
-                        <input type="number" name="amount" class="form-control" aria-label="amount">
+                        <input type="number" name="amount_vote" class="form-control" aria-label="amount">
                     </div>
-                    <button type="button" class="btn btn-dark content-text" id="mint">Mint NFT</button>
+                    <button type="button" class="btn btn-dark content-text" id="vote">Launch vote/Mint NFT</button>
                 </div>
-                <div class="col">
-                    <span class="material-icons md-64">sync_alt</span>
+                <div class="col">   
+                    <span class="material-icons md-64">note_alt</span>
                     <div class="input-group mb-3">
-                        <span class="input-group-text content-text">From</span>
-                        <input type="text" name="from-address" class="form-control" placeholder="address" aria-label="address">
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text content-text">To</span>
-                        <input type="text" name="to-address" class="form-control" placeholder="address"aria-label="address">
+                        <span class="input-group-text content-text" id="basic-addon1">Company name @</span>
+                        <input type="text" name="cName_sign" class="form-control" aria-label="Companyname" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
-                        <input type="number" name="tokenID" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
+                        <input type="number" name="token_sign" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
                     </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text content-text">Amount</span>
-                        <input type="number" name="amount" class="form-control" aria-label="amount">
-                    </div>
-                    <button type="button" class="btn btn-dark content-text" id="transfer">Transfer</button>
+                    <button type="button" class="btn btn-dark content-text" id="sign_mint">Sign mint</button>
+                    <button type="button" class="btn btn-dark content-text" id="sign_split">Sign split</button>
+
                 </div>
             </div>
         </div>
@@ -103,12 +98,12 @@
     <h2 class="h2 content-text">SCN Lookup</h2>
     <div class="container bg-light lookup-table">
         <div class="input-group mb-4">
-            <input type="search" name="search" class="form-control" placeholder="search" id="datatable-search-input">
+            <input type="search" name="search" class="form-control" placeholder="search company" id="datatable-search-input">
             <button id="search-button" type="button" class="btn btn-dark">
                 <span class="material-icons">search</span>
             </button>
         </div>
-        <div id="results">
+        <div id="results" style="display:none;">
             <div class="row">
                 <div class="col cInfo">
                     <p class="info-text">Company Name</p>
@@ -131,6 +126,62 @@
             </div>
         </div>
         <h3 class="noC content-text" id="noC">The company doesn't exist!</h3>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">   
+                <div class="col">
+                    <span class="material-icons md-64">sync_alt</span>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text">From</span>
+                        <input type="text" name="from-address" class="form-control" placeholder="address" aria-label="address">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text">To</span>
+                        <input type="text" name="to-address" class="form-control" placeholder="address"aria-label="address">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
+                        <input type="number" name="tokenID" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
+                    </div>
+                    <button type="button" class="btn btn-dark content-text" id="transfer">Transfer</button>
+                </div>
+                <div class="col">
+                    <span class="material-icons md-64">local_fire_department</span>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text" id="basic-addon1">Owner</span>
+                        <input type="text" name="owner" class="form-control" aria-label="owner" placeholder="address" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
+                        <input type="number" name="token_burn" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
+                    </div>
+                    <p id='burn-err' class="content-text err-hint">Invalid input!</p>
+                    <button type="button" class="btn btn-dark content-text" id="burn">Burn</button>
+                </div>
+                <div class="col">
+                    <span class="material-icons md-64">call_split</span>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text" id="basic-addon1">Token ID</span>
+                        <input type="number" name="tokenID" class="form-control" aria-label="tokenID" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text">Address 1</span>
+                        <input type="text" name="from-address" class="form-control" aria-label="address">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text">Address 2</span>
+                        <input type="text" name="to-address" class="form-control" aria-label="address">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text content-text">Amount</span>
+                        <input type="number" name="amount" class="form-control" aria-label="amount">
+                    </div>
+                    <button type="button" class="btn btn-dark content-text" id="transfer">Transfer</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="./work.js"></script>
