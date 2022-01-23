@@ -27,10 +27,18 @@ Input your company name, founding date, the amount of share and all the founders
 <img src="https://user-images.githubusercontent.com/43258839/150679748-804db6c8-1627-4e74-b746-c37f9370f226.png" width="280" height="250" />
 
 ### Launch vote
+Before minting or spliting the stock certificate, the company should get the agreement from the board of directors. Therefore, you need to lauch a mint/split vote and each of the founders will have to sign it if they're agree with this action. After all the founders vote/sign it, the system will issue or split the stock certificate NFT automatically.  
 #### To Mint NFT
+Input your company name, the NFT owner (receiver) and the amount. You will then get your NFT token ID. This step is to launch a vote, the system will only issue the NFT after all the founders sign.   
 <img src="https://user-images.githubusercontent.com/43258839/150680329-ac15e040-02a3-400d-ba0d-e309e839c291.png" width="280" height="240" />
 
 #### To Split NFT
+Input your NFT token ID and other info, the system will split the shares by the input amount and send them to 2 different accounts (also requires voting).  
+<img src="https://user-images.githubusercontent.com/43258839/150686974-2f474efe-39ed-4dbb-a236-b0259efa785c.png" width="280" height="230" />
 
 ### Sign
-<img src="https://user-images.githubusercontent.com/43258839/150680564-f442c923-9c11-4745-bb1a-442e8c10175f.png" width="280" height="200" />
+Sign/Vote by your metamask.  
+<img src="https://user-images.githubusercontent.com/43258839/150680564-f442c923-9c11-4745-bb1a-442e8c10175f.png" width="280" height="180" />
+
+### Other functions
+We also provide other functions such as burn NFT and lookup company information.  
