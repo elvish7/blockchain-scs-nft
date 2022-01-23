@@ -4,13 +4,22 @@ The functions include:
 * Register a new company
 * Launch a mint/split vote
 * Sign the vote
+* Issue NFT
 * Transfer NFT
 * Burn NFT
 * Query company information
 
+The contract was deployed to Ethereum testnet, and the stock certificate NFT will be on opensea testnet. 
+
+## Links
+* SCS website
+  * https://elvish7.github.io/blockchain-scs-nft/scs-platform/index.html
+* Contract
+  * https://rinkeby.etherscan.io/address/0xd7C0ed665A348180BdBE1f34FA964E247B113067#code
+
 ## Usage
 ### Flow
-To mint a stock certificate NFT:
+To mint a stock certificate NFT:  
 Register your company :arrow_right: Launch a mint vote :arrow_right: Get multi-signature (all the founders) :arrow_right: Issue (automatically) :arrow_right: Done!
 
 ### Registration
