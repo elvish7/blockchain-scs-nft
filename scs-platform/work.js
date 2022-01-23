@@ -83,10 +83,14 @@ document.getElementById('search-button').onclick = () => {
                         document.getElementById('getcName').textContent = info[0];
                         document.getElementById('getfDate').textContent = info[1];
                         document.getElementById('getoshare').textContent = info[2];
-                        document.getElementById('getcertificates1').textContent = info[3][0]['id'];
-                        document.getElementById('getcertificates2').textContent = info[3][0]['owner'];
+                        console.log(info[3]);
+                        if (info[3].length != 0){
+                            document.getElementById('getcertificates1').textContent = info[3][0]['id'];
+                            document.getElementById('getcertificates2').textContent = info[3][0]['owner'];
+                        }
                     })
                     .catch((error) => {
+                        console.log(error);
                         document.getElementById('noC').style.display = "block";
                         document.getElementById('results').style.display="none";
                     });
