@@ -83,7 +83,8 @@ document.getElementById('search-button').onclick = () => {
                         document.getElementById('getcName').textContent = info[0];
                         document.getElementById('getfDate').textContent = info[1];
                         document.getElementById('getoshare').textContent = info[2];
-                        document.getElementById('getcertificates').textContent = info[3];
+                        document.getElementById('getcertificates1').textContent = info[3][0]['id'];
+                        document.getElementById('getcertificates2').textContent = info[3][0]['owner'];
                     })
                     .catch((error) => {
                         document.getElementById('noC').style.display = "block";
